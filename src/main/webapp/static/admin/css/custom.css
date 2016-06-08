@@ -1,0 +1,82 @@
+.aside-md {
+	width: 220px;
+}
+
+.required {
+	color: red;
+}
+
+.preview {
+	list-style: none;
+	padding-left: 0px;
+}
+
+.preview li {
+	width: 100px;
+	height: 100px;
+	display: inline-block;
+	margin-right: 10px;
+	border: 1px dashed #BBBBBB;
+	position: relative;
+}
+
+.preview .full {
+	border: 0px !important;
+}
+
+.preview img {
+	width: 100px;
+	height: 100px;
+	vertical-align: baseline;
+}
+
+.preview .operate {
+	background: rgba(33, 33, 33, .7);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#b2404040,
+		endColorstr=#b2404040);
+	z-index: 5;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100px;
+	height: 20px;
+	text-align: center;
+}
+
+.preview .loading {
+	z-index: 5;
+	position: absolute;
+	top: 40px;
+	left: 40px;
+	width: 100px;
+	height: 100px;
+	background-image: url("../images/loading.gif");
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+}
+
+.preview .operate a {
+	color: #ff4200;
+}
+
+.center {
+	text-align: center;
+}
+
+.center tr {
+	text-align: center;
+}
+
+.center td {
+	text-align: center;
+}
+
+.radio-inline input[type="radio"], .checkbox input[type="checkbox"],
+	.checkbox-inline input[type="checkbox"] {
+	position: absolute;
+	margin-left: -16px;
+}
+
+#nav .nav-user {
+	padding: 22px 10px;
+}

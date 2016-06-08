@@ -1,0 +1,47 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	  http://www.springframework.org/schema/mvc  
+	  http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+	  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+	<context:component-scan base-package="ec"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:config/system.properties</value>
+		</property>
+	</bean>
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/${static.path}/${static.version}/**"
+		location="${static.locate}/" cache-period="${static.cachePeriod}" />
+	<mvc:resources mapping="/favicon.ico" location="${static.locate}/favicon.ico"
+		cache-period="${static.cachePeriod}" />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/favicon.ico" />
+			<mvc:exclude-mapping path="/${static.path}/**" />
+			<bean class="ec.web.mall.interceptor.WebMallInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**" />
+			<bean class="ec.web.admin.interceptor.WebAdminInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="${system.viewPath}" />
+		<property name="suffix" value=".${system.viewSuffix}" />
+	</bean>
+</beans>

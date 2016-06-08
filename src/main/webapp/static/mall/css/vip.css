@@ -1,0 +1,106 @@
+.myalllist {
+	padding-bottom: 20px;
+}
+
+.myalllist .nav>li>a {
+	font-size: .8em;
+}
+
+.myalllist .navbar-nav>li>a {
+	padding: 10px 20px;
+}
+
+.myalllist .nav .active a {
+	background: #ff9800;
+	color: #fff;
+}
+
+.myalllist .panel-default>.panel-heading .badge {
+	background-color: #ff9800;
+}
+
+.right {
+	float: right;
+}
+
+.o {
+	font-size: .9em;
+}
+
+.o-top {
+	width: 100%;
+	height: 40px;
+	border: 1px solid #dddddd;
+	border-bottom: none;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+}
+
+.o-top-c {
+	margin: 12px;
+}
+
+.o-content {
+	
+}
+
+.o-detail {
+	margin-bottom: 20px;
+	background-color: white;
+}
+
+.o-content-c {
+	margin: 0;
+}
+
+.o-content .o-content-t {
+	width: 100%;
+	border: 1px solid #dddddd;
+	border-top: none;
+}
+
+.o-content .o-content-t tr {
+	border-top: 1px solid #dddddd;
+}
+
+.o-content .o-content-t td {
+	padding: 12px;
+	text-align: center;
+	vertical-align: top;
+}
+
+.o-content-t .bd {
+	border-right: 1px solid #dddddd;
+}
+
+.o-content-t .sm {
+	width: 100px;
+}
+
+.o-content-t .cm {
+	width: 150px;
+}
+
+.o-content-t .sg {
+	text-align:left !important;
+}
+
+.l {
+	border-top: 1px solid #dddddd;
+}
+
+.ginfo {
+	padding: 5px 0 10px 0;
+}
+
+.gimg {
+	float: left;
+	padding-right: 5px;
+}
+
+.gimg img {
+	width: 70px;
+	height: 70px;
+	border: 1px solid #eeeeee;
+}
