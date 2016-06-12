@@ -33,6 +33,7 @@ import ec.web.mall.annotation.WebMallData;
 import ec.web.mall.service.WebService;
 import framework.data.json.JSON;
 import framework.data.web.util.WebUtil;
+import net.sf.json.JSONObject;
 
 /**
  * @author SUMIN
@@ -84,8 +85,8 @@ public class WebMallController {
 		}
 		CoreUserToken token = this.getCoreUserService().getCoreUserTokenService().createToken(user.getId(),
 				WebUtil.getIpAddr(request));
-		this.getWebService().setToken(user, token, request, response);
-		return JSON.getJson(true);
+		JSONObject r = this.getWebService().setToken(user, token, request, response);
+		return JSON.getJson(r);
 	}
 
 	/**

@@ -140,6 +140,6 @@
 		});
 	}
 	VIP.ui.table = function(table) {
-		
+
 	}
 }());

@@ -38,10 +38,11 @@ public class WebService {
 	 */
 	public JSONObject setToken(CoreUser user, CoreUserToken token, HttpServletRequest request,
 			HttpServletResponse response) {
-		WebUtil.setCookies(request, response, TOKEN_IN_REQUEST, token.getToken(), token.getExpiresIn());
+		//WebUtil.setCookies(request, response, TOKEN_IN_REQUEST, token.getToken(), token.getExpiresIn());
 		JSONObject json = new JSONObject();
 		json.put("name", user.getName());
 		json.put("token", token.getToken());
+		json.put("path", WebUtil.getContextPathWithSuffix(request));
 		json.put("expires_in", token.getExpiresIn());
 		return json;
 	}

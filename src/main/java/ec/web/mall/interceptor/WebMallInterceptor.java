@@ -152,6 +152,7 @@ public class WebMallInterceptor implements HandlerInterceptor {
 			host = host.replace("http://", "//");
 		}
 		env.put("host", host);
+		env.put("contextPath", WebUtil.getContextPath(request));
 		String staticHost = this.getSystemConfigService().getProperty("static.host");
 		if (null == staticHost || "".equals(staticHost)) {
 			String staticPath = this.getSystemConfigService().getProperty("static.path");

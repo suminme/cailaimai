@@ -248,6 +248,7 @@
 		$(document).ready(function() {
 			UTIL.init({
 				host : "${env.host}",
+				contextPath : "${env.contextPath}",
 				staticHost : "${env.staticHost}",
 				storageHost : "${env.storageHost}"
 			});

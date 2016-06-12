@@ -66,9 +66,7 @@
 														<div class="price">
 															<span class="price-new">¥ ${goods.price}</span>
 														</div>
-														<div>
-															销量: ${goods.totalSale}
-														</div>
+														<div>销量: ${goods.totalSale}</div>
 														<div class="add_to_cart_side">
 															<a href="javascript:;"
 																onclick="MALL.cart.add('${goods.id}',null,false)"><i
@@ -108,25 +106,28 @@
 																</c:if>
 																<a class="img"
 																	href="${env.host}/mall/goods/${goods.id}.html"><img
-																	class="img-responsive goods_list_big" style="width: 217px; height: 217px;"
-																	src="${env.storageHost}/${goods.imagePath}@!goodslist" /> </a>
+																	class="img-responsive goods_list_big"
+																	style="width: 217px; height: 217px;"
+																	src="${env.storageHost}/${goods.imagePath}@!goodslist" />
+																</a>
 															</div>
 														</div>
 														<div class="product-meta">
 															<div class="top">
-																<h3 class="name" itemprop="name"  style="white-space: nowrap;overflow: hidden;">
+																<h3 class="name" itemprop="name"
+																	style="white-space: nowrap; overflow: hidden;">
 																	<a href="${env.host}/mall/goods/${goods.id}.html"
 																		title="${goods.name}">${goods.name}</a>
 																</h3>
 																<div class="rating"></div>
+																<div>销量: ${goods.totalSale}</div>
 																<div class="price">
 																	<span class="price-new">¥ ${goods.price}</span> <a
-																		href="javascript:;"
+																		style="float: right" href="javascript:;"
 																		onclick="MALL.cart.add('${goods.id}',null,false)"
 																		class="add_to_cart"><i
 																		class="md md-add-shopping-cart"></i></a>
 																</div>
-																<p class="description" itemprop="description">${goods.description}</p>
 															</div>
 														</div>
 													</div>

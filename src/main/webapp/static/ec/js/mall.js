@@ -4,6 +4,7 @@
 		init : {},
 		signin : {},
 		signup : {},
+		signout : {},
 		forget : {},
 		captcha : {},
 		cart : {},
@@ -16,6 +17,32 @@
 	var sid;
 	MALL.init = function(signinUserId) {
 		sid = signinUserId;
+		if (signinUserId != "") {
+			MALL.signout.auto(sid);
+		}
+	}
+	MALL.signout.auto = function() {
+		$.cookie("lot", new Date().getTime(), {
+			path : UTIL.config.contextPath + "/"
+		});
+		document.onkeydown = function() {
+			$.cookie("lot", new Date().getTime(), {
+				path : UTIL.config.contextPath + "/"
+			});
+		}
+		document.onmousemove = function() {
+			$.cookie("lot", new Date().getTime(), {
+				path : UTIL.config.contextPath + "/"
+			});
+		}
+		var si = setInterval(function() {
+			var lot = $.cookie("lot");
+			if (new Date().getTime() - lot > 1000 * 60 * 30) {
+				clearInterval(si);
+				location.href = UTIL.config.host + "/signout/";
+				alert("登陆超时");
+			}
+		}, 60 * 1000);
 	}
 	MALL.signin.init = function(r) {
 		var form = $("#signin_form");
@@ -29,6 +56,7 @@
 			return true;
 		}, function(json, formSubmit) {
 			if (json.success) {
+				MALL.signin.cookie(json.data);
 				var hash = window.location.hash;
 				formSubmit.html("登陆成功").attr("disabled", true);
 				setTimeout(function() {
@@ -39,6 +67,11 @@
 				form.find("[name='password']").val(password);
 				return;
 			}
+		});
+	}
+	MALL.signin.cookie = function(token) {
+		$.cookie("token", token.token, {
+			path : token.path
 		});
 	}
 	MALL.signup.init = function() {
@@ -155,7 +188,7 @@
 			}
 			var at = null;
 			$.each($("[name='amount']"), function() {
-				if($(this)[0].disabled) {
+				if ($(this)[0].disabled) {
 					return true;
 				}
 				var s = parseFloat(toDecimal($(this).attr("stock")));
@@ -166,7 +199,7 @@
 				}
 			});
 			if (at != null) {
-				alert("["+at+"]库存不足,请联系管理员");
+				alert("[" + at + "]库存不足,请联系管理员");
 				return;
 			}
 			$("#cart_form").submit();

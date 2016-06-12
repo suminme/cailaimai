@@ -27,7 +27,7 @@ public class CoreUserTokenService {
 	/**
 	 * 
 	 */
-	public static final int expiresIn = 2592000;
+	public static final int expiresIn = 604800;
 
 	/**
 	 * 根据Token获取用户

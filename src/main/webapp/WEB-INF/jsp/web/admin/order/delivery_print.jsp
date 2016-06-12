@@ -197,8 +197,8 @@ table td {
 					<tr>
 						<td>序号</td>
 						<td>商品名称</td>
-						<td>单价</td>
 						<td>数量</td>
+						<td>单价</td>
 						<td>小计</td>
 					</tr>
 					<c:forEach var="orderGoods" items="${order.orderGoodsList}"

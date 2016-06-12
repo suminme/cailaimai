@@ -13,6 +13,7 @@
 	src="${env.staticHost}/ec/vendor/art/jquery.artDialog.js?skin=default"></script>
 <script type="text/javascript"
 	src="${env.staticHost}/ec/vendor/art/iframeTools.source.js"></script>
+<script src="${env.staticHost}/ec/vendor/cookie/jquery.cookie.js"></script>
 <script src="${env.staticHost}/ec/vendor/md5/md5.js"></script>
 <script type="text/javascript" src="${env.staticHost}/ec/js/util.js"></script>
 <script type="text/javascript" src="${env.staticHost}/ec/js/mall.js"></script>
@@ -20,7 +21,8 @@
 <script type="text/javascript" src="${env.staticHost}/mall/js/custom.js"></script>
 <script>
 	UTIL.init({
-		host : "${env.host}"
+		host : "${env.host}",
+		contextPath : "${env.contextPath}"
 	});
 	MALL.init("${signinUser.id}");
 </script>
