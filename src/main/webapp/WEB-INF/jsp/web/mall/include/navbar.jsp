@@ -122,6 +122,8 @@
 																		class="menu-title">${mall.name}</span></a></li>
 															</c:if>
 														</c:forEach>
+														<li><a href="${env.host}/faq/new.html"><span
+																class="menu-title">新手上路</span></a></li>
 													</ul>
 												</div>
 											</div>
@@ -133,7 +135,8 @@
 					</div>
 				</div>
 				<div class="nav-search col-xs-12 col-sm-6 col-md-3">
-					<form id="mall_search" action="${env.host}/mall/search/" method="get">
+					<form id="mall_search" action="${env.host}/mall/search/"
+						method="get">
 						<div id="search" class="input-group pull-right">
 							<input type="text" name="keyword" value="${keyword}"
 								placeholder="搜索" class="noborder-right form-control"> <span
