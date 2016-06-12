@@ -153,19 +153,20 @@
 														</div>
 														<div class="product-meta">
 															<div class="top">
-																<h3 class="name" itemprop="name"  style="white-space: nowrap;overflow: hidden;">
+																<h3 class="name" itemprop="name"
+																	style="white-space: nowrap; overflow: hidden;">
 																	<a href="${env.host}/mall/goods/${goods.id}.html"
 																		title="${goods.name}">${goods.name}</a>
 																</h3>
 																<div class="rating"></div>
+																<div>销量: ${goods.totalSale}</div>
 																<div class="price">
 																	<span class="price-new">¥ ${goods.price}</span> <a
-																		href="javascript:;"
+																		style="float: right" href="javascript:;"
 																		onclick="MALL.cart.add('${goods.id}',null,false)"
 																		class="add_to_cart"><i
 																		class="md md-add-shopping-cart"></i></a>
 																</div>
-																<p class="description" itemprop="description">${goods.description}</p>
 															</div>
 														</div>
 													</div>
