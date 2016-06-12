@@ -97,6 +97,14 @@ public class CoreGoodsService {
 		List<CoreGoods> datas = this.getCoreGoodsDao().getGoodsListByMall(mallId);
 		return datas;
 	}
+	
+	/**
+	 * 根据关键词搜索商品列表
+	 */
+	public List<CoreGoods> getGoodsListBySearch(String keyword) {
+		List<CoreGoods> datas = this.getCoreGoodsDao().getGoodsListBySearch(keyword);
+		return datas;
+	}
 
 	/**
 	 * 根据商品类别ID获取商品列表

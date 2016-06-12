@@ -130,6 +130,19 @@
 						</div>
 					</div>
 				</div>
+				<div class="nav-search col-xs-12 col-sm-6 col-md-3">
+					<form id="mall_search" action="${env.host}/mall/search/" method="get">
+						<div id="search" class="input-group pull-right">
+							<input type="text" name="keyword" value="${keyword}"
+								placeholder="搜索" class="noborder-right form-control"> <span
+								class="input-group-btn">
+								<button type="submit" class="btn btn-search">
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

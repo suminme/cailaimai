@@ -20,6 +20,12 @@
 		if (signinUserId != "") {
 			MALL.signout.auto(sid);
 		}
+		$("#mall_search").submit(function(e) {
+			var s = $(this).find("[name='keyword']").val();
+			if($.trim(s)=="") {
+				e.preventDefault();
+			}
+		});
 	}
 	MALL.signout.auto = function() {
 		$.cookie("lot", new Date().getTime(), {

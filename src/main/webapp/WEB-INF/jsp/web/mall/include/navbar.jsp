@@ -11,6 +11,7 @@
 				</div>
 				<div class="login pull-right ">
 					<ul class="links">
+						<li><a href="${env.host}/faq/new.html">新手上路</a>|</li>
 						<c:if test="${signinUser eq null}">
 							<li><a href="${env.host}/signup/">注册</a>|</li>
 							<li><a href="${env.host}/signin/">登录</a></li>
@@ -80,7 +81,8 @@
 							<ul class="dropdown-menu content">
 								<li><c:if test="${cart.count > 0}">
 										<p class="text-center">
-											您的购物车共有<span id="cart_count">${cart.count}</span>项商品<!--，合计<span
+											您的购物车共有<span id="cart_count">${cart.count}</span>项商品
+											<!--，合计<span
 												id="cart_money">${cart.money}</span>元-->
 										</p></li>
 								</c:if>
@@ -116,10 +118,10 @@
 																		class="menu-title">${mall.name}</span></a></li>
 															</c:if>
 															<c:if test="${typeMap[mall.id] ne null}">
-																<li><a href="${env.host}/mall/${mall.sign}/"><span class="menu-title">${mall.name}</span></a></li>
+																<li><a href="${env.host}/mall/${mall.sign}/"><span
+																		class="menu-title">${mall.name}</span></a></li>
 															</c:if>
 														</c:forEach>
-														<li><a href="${env.host}/faq/new.html"><span class="menu-title">新手上路</span></a></li>
 													</ul>
 												</div>
 											</div>
@@ -129,6 +131,19 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="nav-search col-xs-12 col-sm-6 col-md-3">
+					<form id="mall_search" action="${env.host}/mall/search/" method="get">
+						<div id="search" class="input-group pull-right">
+							<input type="text" name="keyword" value="${keyword}"
+								placeholder="搜索" class="noborder-right form-control"> <span
+								class="input-group-btn">
+								<button type="submit" class="btn btn-search">
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

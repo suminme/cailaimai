@@ -72,6 +72,26 @@ public class CoreGoodsDao {
 	}
 
 	/**
+	 * 根据关键词搜索商品列表
+	 */
+	public List<CoreGoods> getGoodsListBySearch(String keyword) {
+		String sql = "select a.id,a.status,a.typeId,a.code,a.name,a.unit,a.price,a.suggest,a.description,a.createTime,a.onsale,a.sample,a.upload,b.bucketKey as imagePath,ifnull(c.c,0) as stock,IFNULL(e.amount,0) as totalSale from {TABLE} a left join (select a.*,b.bucketKey from "
+				+ this.getRdsService().getTableName(CoreGoodsImg.class) + " a left join "
+				+ this.getRdsService().getTableName(SystemFile.class)
+				+ " b on a.fileId=b.id where a.main=?) b on a.id=b.goodsId left join (select goodsCode,sum(num) as c from "
+				+ this.getRdsService().getTableName(CoreStock.class)
+				+ " group by goodsCode) c on a.code=c.goodsCode left join "
+				+ this.getRdsService().getTableName(CoreMallType.class)
+				+ " d on a.typeId=d.id left join (select a.goodsCode,sum(a.amount) amount from "
+				+ this.getRdsService().getTableName(CoreOrderGoods.class) + " a left join "
+				+ this.getRdsService().getTableName(CoreOrder.class)
+				+ " b on a.orderId=b.id where b.status!=? group by a.goodsCode) e on a.code=e.goodsCode where a.name like ? and a.status=? and onsale=?";
+		List<CoreGoods> datas = this.getRdsService().gets(CoreGoods.class, sql,
+				new Object[] { true, CoreOrder.STATUS_CANEL, "%" + keyword + "%", CoreGoods.STATUS_NORMAL, true });
+		return datas;
+	}
+
+	/**
 	 * 根据商城获取商品列表
 	 */
 	public List<CoreGoods> getGoodsListByMall(Long mallId) {
@@ -87,7 +107,7 @@ public class CoreGoodsDao {
 				+ this.getRdsService().getTableName(CoreOrder.class)
 				+ " b on a.orderId=b.id where b.status!=? group by a.goodsCode) e on a.code=e.goodsCode where d.mallId=? and a.status=? and onsale=?";
 		List<CoreGoods> datas = this.getRdsService().gets(CoreGoods.class, sql,
-				new Object[] { true, CoreOrder.STATUS_CANEL,mallId, CoreGoods.STATUS_NORMAL, true });
+				new Object[] { true, CoreOrder.STATUS_CANEL, mallId, CoreGoods.STATUS_NORMAL, true });
 		return datas;
 	}
 

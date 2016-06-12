@@ -226,6 +226,21 @@ public class WebMallController {
 	}
 
 	/**
+	 * 商城搜索
+	 */
+	@WebCart
+	@WebMallData
+	@RequestMapping(value = "/mall/search/", method = RequestMethod.GET)
+	public String mallSearch(@RequestParam("keyword") String keyword, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		List<CoreGoods> goodsList = this.getCoreGoodsService().getGoodsListBySearch(keyword);
+		request.setAttribute("goodsList", goodsList);
+		request.setAttribute("suggestGoodsList", this.getCoreGoodsService().getSuggestGoodsListByType(null, 8));
+		request.setAttribute("keyword", keyword);
+		return "web/mall/mall_search";
+	}
+
+	/**
 	 * 处理商品筛选信息
 	 */
 	private List<CoreGoodsMeta> dealTypeQueryInfo(HttpServletRequest request) {
