@@ -138,9 +138,9 @@
 					<form id="mall_search" action="${env.host}/mall/search/"
 						method="get">
 						<div id="search" class="input-group pull-right">
-							<input type="text" name="keyword" value="${keyword}"
+							<input type="text" name="keyword" value="${keyword}" style="color: #000000;"
 								placeholder="搜索" class="noborder-right form-control"> <span
-								class="input-group-btn" style="color: #000000;">
+								class="input-group-btn">
 								<button type="submit" class="btn btn-search">
 									<i class="fa fa-search"></i>
 								</button>
