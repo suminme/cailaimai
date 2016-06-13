@@ -220,7 +220,13 @@
 					</section>
 				</aside>
 				<section id="content">
-					<section class="vbox" id="hash_load"></section>
+					<section class="hbox stretch">
+						<section>
+							<section id="hash_load" class="vbox">
+								
+							</section>
+						</section>
+					</section>
 				</section>
 			</section>
 		</section>

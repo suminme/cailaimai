@@ -140,7 +140,7 @@
 						<div id="search" class="input-group pull-right">
 							<input type="text" name="keyword" value="${keyword}"
 								placeholder="搜索" class="noborder-right form-control"> <span
-								class="input-group-btn">
+								class="input-group-btn" style="color: #000000;">
 								<button type="submit" class="btn btn-search">
 									<i class="fa fa-search"></i>
 								</button>

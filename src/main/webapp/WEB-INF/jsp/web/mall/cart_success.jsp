@@ -85,7 +85,7 @@
 								</div>
 							</div>
 							<div class="btn-area">
-								<a class="btn-ordershow" href="${back}">继续购物</a> <a
+								<a class="btn-ordershow" href="${env.host}/">继续购物</a> <a
 									class="btn-submit" href="${env.host}/mall/cart/">去购物车结算 </a>
 							</div>
 							<div style="clear: both;"></div>
