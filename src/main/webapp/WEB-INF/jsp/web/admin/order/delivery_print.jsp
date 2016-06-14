@@ -208,7 +208,7 @@ table td {
 							<td>${orderGoods.goodsName}</td>
 							<td>x${orderGoods.amount}</td>
 							<td>¥${orderGoods.price}</td>
-							<td>¥${orderGoods.amount*orderGoods.price}</span></td>
+							<td>¥<span class="money">${orderGoods.amount*orderGoods.price}</span></td>
 						</tr>
 					</c:forEach>
 					<tr>
@@ -216,14 +216,14 @@ table td {
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td style="text-align:right;">运费：</td>
-						<td>¥${order.freight}</span></td>
+						<td>¥<span class="money">${order.freight}</span></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td style="text-align:right;">合计：</td>
-						<td>¥${order.pay}</span></td>
+						<td>¥<span class="money">${order.pay}</span></td>
 					</tr>
 				</table>
 			</div>
@@ -265,7 +265,14 @@ table td {
 			<p class="p1">${config.site.title}、${config.site.subtitle}</p>
 		</div>
 	</form>
+	<script src="${env.staticHost}/admin/js/jquery-2.1.1.min.js"></script>
 	<script>
+		$(document).ready(function(){
+			$.each($(".money"),function(){
+				var h = $(this).html();
+				$(this).html(toDecimal(h));
+			})
+		});
 		function toDecimal(x) {
 			var tx = /^[0-9]+.?[0-9]*$/;
 			if (!tx.test(x)) {

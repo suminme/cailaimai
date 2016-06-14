@@ -100,30 +100,34 @@
 						onclick="window.open('${env.host}/mall/goods/${orderGoods.goodsId}.html')">${orderGoods.goodsName}</td>
 					<td style="text-align: center;">x${orderGoods.amount}</td>
 					<td style="text-align: center;">¥${orderGoods.price}</td>
-					<td style="text-align: right;">¥${orderGoods.amount*orderGoods.price}</td>
+					<td style="text-align: right;">¥<span class="money">${orderGoods.amount*orderGoods.price}</span></td>
 				</tr>
 			</c:forEach>
 			<tr>
 				<td colspan="4" class="text-right"><strong>商品总额：</strong></td>
-				<td style="text-align: right;">¥${order.money}</td>
+				<td style="text-align: right;">¥<span class="money">${order.money}</span></td>
 			</tr>
 			<tr>
 				<td colspan="4" class="text-right no-border"><strong>运费金额：</strong></td>
-				<td style="text-align: right;">¥${order.freight}</td>
+				<td style="text-align: right;">¥<span class="money">${order.freight}</span></td>
 			</tr>
 			<tr>
 				<td colspan="4" class="text-right no-border"><strong>订单总金额：</strong></td>
-				<td style="text-align: right;">¥${order.total}</td>
+				<td style="text-align: right;">¥<span class="money">${order.total}</span></td>
 			</tr>
 			<tr>
 				<td colspan="4" class="text-right no-border"><strong>订单支付金额：</strong></td>
-				<td style="text-align: right;"><strong>¥${order.pay}</strong></td>
+				<td style="text-align: right;"><strong>¥<span class="money">${order.pay}</span></strong></td>
 			</tr>
 		</tbody>
 	</table>
 </section>
 <script>
 	$(document).ready(function() {
+		$.each($(".money"),function(){
+			var h = $(this).html();
+			$(this).html(toDecimal(h));
+		})
 		ADMIN.order.detail("${order.code}");
 	});
 </script>
