@@ -215,6 +215,13 @@ table td {
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
+						<td style="text-align:right;">运费：</td>
+						<td>¥${order.freight}</span></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
 						<td style="text-align:right;">合计：</td>
 						<td>¥${order.pay}</span></td>
 					</tr>
