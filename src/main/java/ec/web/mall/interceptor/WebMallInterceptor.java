@@ -43,9 +43,12 @@ public class WebMallInterceptor implements HandlerInterceptor {
 		if (!this.hasAnnotation(handlerMethod, JSON.class)) {
 			this.configEnvironment(request);
 		}
-		if (null == this.getWebService().getSigninUser(request) && this.hasAnnotation(handlerMethod, Login.class)) {
-			this.getWebService().redirectToSignin(request, response);
-			return false;
+		if (null == this.getWebService().getSigninUser(request)) {
+			Login login = this.needLogin(handlerMethod);
+			if (null != login) {
+				this.getWebService().redirectToSignin(login.mobile(), request, response);
+				return false;
+			}
 		}
 		return true;
 	}
@@ -185,6 +188,25 @@ public class WebMallInterceptor implements HandlerInterceptor {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * 判断是否有某注解
+	 */
+	private Login needLogin(Object handlerMethod) {
+		if (null == handlerMethod || !(handlerMethod instanceof HandlerMethod)
+				|| null == ((HandlerMethod) handlerMethod).getMethod()) {
+			return null;
+		}
+		Method method = ((HandlerMethod) handlerMethod).getMethod();
+		Login t = method.getAnnotation(Login.class);
+		if (null == t) {
+			t = method.getDeclaringClass().getAnnotation((Login.class));
+		}
+		if (null == t) {
+			return null;
+		}
+		return t;
 	}
 
 	/**

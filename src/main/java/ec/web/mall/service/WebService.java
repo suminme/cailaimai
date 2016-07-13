@@ -38,7 +38,8 @@ public class WebService {
 	 */
 	public JSONObject setToken(CoreUser user, CoreUserToken token, HttpServletRequest request,
 			HttpServletResponse response) {
-		//WebUtil.setCookies(request, response, TOKEN_IN_REQUEST, token.getToken(), token.getExpiresIn());
+		// WebUtil.setCookies(request, response, TOKEN_IN_REQUEST,
+		// token.getToken(), token.getExpiresIn());
 		JSONObject json = new JSONObject();
 		json.put("name", user.getName());
 		json.put("token", token.getToken());
@@ -84,11 +85,20 @@ public class WebService {
 		}
 		return key.toString();
 	}
+	
+	/**
+	 * 跳转到登陆界面
+	 */
+	public void redirectToSignin(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		this.redirectToSignin(false, request, response);
+	}
 
 	/**
 	 * 跳转到登陆界面
 	 */
-	public void redirectToSignin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void redirectToSignin(boolean mobile, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		String r = request.getRequestURL().toString();
 		for (Object k : request.getParameterMap().keySet()) {
 			String value = request.getParameter(k.toString());
@@ -96,7 +106,8 @@ public class WebService {
 				r = r + ((r.indexOf("?") != -1) ? "&" : "?") + k + "=" + value;
 			}
 		}
-		response.sendRedirect(WebUtil.getContextPath(request) + "/signin/?r=" + WebUtil.encodeURL(r.toString()));
+		response.sendRedirect(WebUtil.getContextPath(request) + (mobile ? "/m" : "") + "/signin/?r="
+				+ WebUtil.encodeURL(r.toString()));
 	}
 
 	/**

@@ -1,0 +1,21 @@
+.am-btn-block {
+	padding: 1.3rem;
+}
+
+.am-header-title-txt {
+	margin: 0 40px !important;
+}
+
+.am-u-sm-2 {
+	width: 20%;
+}
+
+.my .head {
+	background-color: #019fc7;
+}
+
+.personal_avatar img {
+	border-radius: 50%;
+	width: 80px;
+	padding-bottom: 5px;
+}

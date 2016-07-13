@@ -10,8 +10,9 @@ import java.lang.annotation.Target;
  * @version 0.1
  * @since 2016-04-18
  */
-@Target( { ElementType.METHOD,ElementType.TYPE })
+@Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Login {
-	
+
+	boolean mobile() default false;
 }
