@@ -9,11 +9,10 @@
 		<li><a href="javascript:;"> <span class="am-icon-bullhorn"></span>
 				<span class="am-navbar-label">新手上路</span>
 		</a></li>
-		<li><a href="${env.host}/m/cart/"><c:if
-					test="${cart.count>0}">
-					<span class="am-icon-shopping-cart"><span
-						class="am-text-xs nc-badge-shopping-cart ng-binding">${cart.count}</span>
-				</c:if> </span><span class="am-navbar-label">购物车</span> </a></li>
+		<li><a href="${env.host}/m/cart/"><span
+				class="am-icon-shopping-cart"><c:if test="${cart.count>0}">
+						<span class="am-text-xs nc-badge-shopping-cart ng-binding">${cart.count}</span>
+					</c:if> </span><span class="am-navbar-label">购物车</span> </a></li>
 		<li><a href="${env.host}/m/personal/"> <span
 				class="am-icon-user"></span> <span class="am-navbar-label">个人中心</span>
 		</a></li>
