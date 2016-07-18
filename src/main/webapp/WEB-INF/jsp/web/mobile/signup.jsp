@@ -6,7 +6,7 @@
 	<div class="nc-main">
 		<header data-am-widget="header" class="am-header bgc5">
 			<div class="am-header-left am-header-nav">
-				<a href="javascript:;"> <i class="fa fa-user"></i>
+				<a href="javascript:;"> <span class="am-icon-user"></span>
 				</a>
 			</div>
 			<h1 class="am-header-title am-header-title-txt">

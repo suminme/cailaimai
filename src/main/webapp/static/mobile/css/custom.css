@@ -1,3 +1,7 @@
+.nc-main img {
+	max-width:100%;
+}
+
 .am-btn-block {
 	padding: 1.3rem;
 }
@@ -18,4 +22,14 @@
 	border-radius: 50%;
 	width: 80px;
 	padding-bottom: 5px;
+}
+
+.sliders {
+	margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sliders li {
+	display:none;
 }

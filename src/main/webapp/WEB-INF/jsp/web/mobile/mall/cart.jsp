@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html;" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<jsp:include page="include/header.jsp" />
+<jsp:include page="../include/header.jsp" />
 <body>
 	<div class="nc-main">
 		<header data-am-widget="header" class="am-header bgc5">
@@ -32,7 +32,7 @@
 		</div>
 		<div nc-tips width="120px"></div>
 	</div>
-	<jsp:include page="include/footer.jsp" />
+	<jsp:include page="../include/footer.jsp" />
 	<script type="text/javascript">
 		$(document).ready(function() {
 			MOBILE.init.tabbar(2);

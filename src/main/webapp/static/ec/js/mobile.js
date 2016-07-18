@@ -137,15 +137,13 @@
 		});
 	}
 	MOBILE.cart.add = function(goodsId, amount, redirect) {
-		var url = UTIL.config.host + "/mall/cart/add/";
+		var url = UTIL.config.host + "/m/mall/cart/add/";
 		url = url + "?goodsId=" + goodsId;
 		if (amount != null) {
 			url = url + "&amount=" + amount;
 		}
-		// if (sid == "" || redirect) {
-		if (true) {
-			url = url + "&back=" + window.location.href;
-			location.href = url;
+		if (sid == "") {
+			alert("请先登录");
 			return;
 		}
 		UTIL.ajax.post(url, null, function(json) {

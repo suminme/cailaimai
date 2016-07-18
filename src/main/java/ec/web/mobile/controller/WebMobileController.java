@@ -1,16 +1,26 @@
 package ec.web.mobile.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import ec.core.cart.model.CoreCart;
+import ec.core.cart.service.CoreCartService;
+import ec.core.goods.model.CoreGoods;
+import ec.core.goods.model.CoreGoodsMeta;
 import ec.core.goods.service.CoreGoodsService;
+import ec.core.mall.model.CoreMall;
+import ec.core.mall.model.CoreMallType;
 import ec.core.mall.service.CoreMallService;
 import ec.core.user.model.CoreUser;
 import ec.core.user.model.CoreUserAddress;
@@ -20,6 +30,7 @@ import ec.system.captcha.service.SystemCaptchaService;
 import ec.web.mall.annotation.WebCart;
 import ec.web.mall.annotation.WebMallData;
 import ec.web.mall.service.WebService;
+import framework.data.json.JSON;
 import framework.data.web.annotation.Login;
 import framework.data.web.util.WebUtil;
 
@@ -81,15 +92,6 @@ public class WebMobileController {
 	}
 
 	/**
-	 * 购物车
-	 */
-	@Login(mobile = true)
-	@RequestMapping(value = "/cart/", method = RequestMethod.GET)
-	public String toCart(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return "web/mobile/cart";
-	}
-
-	/**
 	 * 个人中心
 	 */
 	@Login(mobile = true)
@@ -132,6 +134,93 @@ public class WebMobileController {
 	}
 
 	/**
+	 * 商城主页
+	 */
+	@WebCart
+	@WebMallData
+	@RequestMapping(value = "/mall/{mallSign}/", method = RequestMethod.GET)
+	public String mall(@PathVariable String mallSign, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		CoreMall mall = this.getCoreMallService().getMallBySign(mallSign);
+		request.setAttribute("mall", mall);
+		List<CoreGoods> goodsList = this.getCoreGoodsService().getGoodsListByMall(mall.getId());
+		request.setAttribute("suggestGoodsList", this.getCoreGoodsService().getSuggestGoodsListByType(null, 8));
+		request.setAttribute("goodsList", goodsList);
+		List<CoreMallType> mallGoodsTypes = this.getCoreGoodsService().getTypeListByMallWithGoodsCount(mall.getId());
+		request.setAttribute("mallGoodsTypes", mallGoodsTypes);
+		return "web/mobile/mall/type";
+	}
+
+	/**
+	 * 商品明细
+	 */
+	@WebCart
+	@WebMallData
+	@RequestMapping(value = "/mall/{goodsId}.html", method = RequestMethod.GET)
+	public String goodsDetail(@PathVariable Long goodsId, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		CoreGoods goods = this.getCoreGoodsService().getGoodsById(goodsId);
+		List<CoreGoodsMeta> metas = this.getCoreGoodsService().getGoodsMetaListByGoods(goods.getId());
+		if (null != metas) {
+			Map<Long, String[]> metaMap = new HashMap<Long, String[]>();
+			for (CoreGoodsMeta meta : metas) {
+				Long key = meta.getTypeMetaId();
+				String[] s = metaMap.get(key);
+				if (null == s) {
+					s = new String[] { meta.getTypeMeta(), meta.getTypeMetaValue() };
+				} else {
+					String v = s[1];
+					v = v + "," + meta.getTypeMetaValue();
+					s = new String[] { meta.getTypeMeta(), v };
+				}
+				metaMap.put(key, s);
+			}
+			request.setAttribute("metas", metaMap.values());
+		}
+		request.setAttribute("goods", goods);
+		this.getAndSetDetailByType(goods.getTypeId(), request);
+		request.setAttribute("imgs", this.getCoreGoodsService().getGoodsImgListByGoods(goods.getId()));
+		return "web/mobile/mall/goods_detail";
+	}
+
+	/**
+	 * 根据类别获取页面信息
+	 */
+	private CoreMallType getAndSetDetailByType(Long typeId, HttpServletRequest request) {
+		CoreMallType type = this.getCoreMallService().getTypeById(typeId);
+		request.setAttribute("type", type);
+		CoreMall mall = this.getCoreMallService().getMallById(type.getMallId());
+		request.setAttribute("mall", mall);
+		List<CoreGoods> suggestGoodsList = this.getCoreGoodsService().getSuggestGoodsListByType(null, 8);
+		request.setAttribute("suggestGoodsList", suggestGoodsList);
+		List<CoreMallType> mallGoodsTypes = this.getCoreGoodsService()
+				.getTypeListByMallWithGoodsCount(type.getMallId());
+		request.setAttribute("mallGoodsTypes", mallGoodsTypes);
+		return type;
+	}
+
+	/**
+	 * 购物车
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/mall/cart/", method = RequestMethod.GET)
+	public String toCart(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return "web/mobile/mall/cart";
+	}
+
+	/**
+	 * 添加到购物车
+	 */
+	@RequestMapping(value = "/mall/cart/add/", method = RequestMethod.POST)
+	public JSON addToCart(@RequestParam("goodsId") long goodsId, Float amount, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		this.getCoreCartService().addGoodsToUserCart(signinUser.getId(), goodsId, amount);
+		CoreCart cart = this.getCoreCartService().getCartByUser(signinUser.getId());
+		return JSON.getJson(cart);
+	}
+
+	/**
 	 * 
 	 */
 	@Resource
@@ -142,6 +231,12 @@ public class WebMobileController {
 	 */
 	@Resource
 	private CoreMallService coreMallService;
+
+	/**
+	 * 
+	 */
+	@Resource
+	private CoreCartService coreCartService;
 
 	/**
 	 * 
@@ -175,6 +270,14 @@ public class WebMobileController {
 
 	public void setCoreMallService(CoreMallService coreMallService) {
 		this.coreMallService = coreMallService;
+	}
+
+	public CoreCartService getCoreCartService() {
+		return coreCartService;
+	}
+
+	public void setCoreCartService(CoreCartService coreCartService) {
+		this.coreCartService = coreCartService;
 	}
 
 	public CoreUserService getCoreUserService() {
