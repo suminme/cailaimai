@@ -124,6 +124,8 @@
 														</c:forEach>
 														<li><a href="${env.host}/faq/new.html"><span
 																class="menu-title">新手上路</span></a></li>
+														<li><a href="${env.host}/faq/mobile.html"><span
+																class="menu-title">手机商城</span></a></li>
 													</ul>
 												</div>
 											</div>
