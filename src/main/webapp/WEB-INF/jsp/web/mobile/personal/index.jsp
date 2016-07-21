@@ -12,21 +12,21 @@
 				<a>${signinUser.name}</a>
 			</div>
 			<div class="orderstatus am-cf am-text-center bgc1">
-				<a href="#" class="am-u-sm-2 border-no-left"> <span
+				<a href="${env.host}/m/order/list/?status=1" class="am-u-sm-2 border-no-left"> <span
 					class="am-icon-download am-text-lg"></span><br /> <span>待付款</span>
-				</a> <a href="#" class="am-u-sm-2"> <span
+				</a> <a href="${env.host}/m/order/list/?status=2" class="am-u-sm-2"> <span
 					class="am-icon-credit-card am-text-lg"></span><br /> <span>已付款</span>
-				</a> <a href="#" class="am-u-sm-2"> <span
+				</a> <a href="${env.host}/m/order/list/?status=3" class="am-u-sm-2"> <span
 					class="am-icon-bus am-text-lg"></span><br /> <span>已出库</span>
-				</a> <a href="#" class="am-u-sm-2"> <span
+				</a> <a href="${env.host}/m/order/list/?status=4" class="am-u-sm-2"> <span
 					class="am-icon-database am-text-lg"></span><br /> <span>已完成</span>
-				</a><a href="#" class="am-u-sm-2"> <span
+				</a><a href="${env.host}/m/order/list/?status=-1" class="am-u-sm-2"> <span
 					class="am-icon-code am-text-lg"></span><br /> <span>已取消</span>
 				</a>
 			</div>
 			<ul
 				class="am-list am-list-border am-padding-bottom am-margin-bottom-0 am-padding-top">
-				<li><a href="${env.host}/m/cart/"> <i
+				<li><a href="${env.host}/m/mall/cart/"> <i
 						class="am-icon-shopping-cart am-icon-fw c7"></i><span>购物车</span> <span
 						class="am-icon-angle-right f-r "></span>
 				</a></li>

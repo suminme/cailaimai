@@ -22,6 +22,8 @@ import ec.core.goods.service.CoreGoodsService;
 import ec.core.mall.model.CoreMall;
 import ec.core.mall.model.CoreMallType;
 import ec.core.mall.service.CoreMallService;
+import ec.core.order.model.CoreOrder;
+import ec.core.order.service.CoreOrderService;
 import ec.core.user.model.CoreUser;
 import ec.core.user.model.CoreUserAddress;
 import ec.core.user.model.CoreUserInvoice;
@@ -144,11 +146,24 @@ public class WebMobileController {
 		CoreMall mall = this.getCoreMallService().getMallBySign(mallSign);
 		request.setAttribute("mall", mall);
 		List<CoreGoods> goodsList = this.getCoreGoodsService().getGoodsListByMall(mall.getId());
-		request.setAttribute("suggestGoodsList", this.getCoreGoodsService().getSuggestGoodsListByType(null, 8));
 		request.setAttribute("goodsList", goodsList);
 		List<CoreMallType> mallGoodsTypes = this.getCoreGoodsService().getTypeListByMallWithGoodsCount(mall.getId());
 		request.setAttribute("mallGoodsTypes", mallGoodsTypes);
 		return "web/mobile/mall/type";
+	}
+
+	/**
+	 * 商城搜索
+	 */
+	@WebCart
+	@WebMallData
+	@RequestMapping(value = "/mall/search/", method = RequestMethod.GET)
+	public String mallSearch(@RequestParam("keyword") String keyword, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		List<CoreGoods> goodsList = this.getCoreGoodsService().getGoodsListBySearch(keyword);
+		request.setAttribute("goodsList", goodsList);
+		request.setAttribute("keyword", keyword);
+		return "web/mobile/mall/search";
 	}
 
 	/**
@@ -200,6 +215,16 @@ public class WebMobileController {
 	}
 
 	/**
+	 * 新手上路
+	 */
+	@RequestMapping(value = "/new/", method = RequestMethod.GET)
+	public String toNew(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<CoreMall> mallList = this.getCoreMallService().getMallList();
+		request.setAttribute("mallList", mallList);
+		return "web/mobile/new/index";
+	}
+
+	/**
 	 * 购物车
 	 */
 	@Login(mobile = true)
@@ -221,6 +246,19 @@ public class WebMobileController {
 	}
 
 	/**
+	 * 订单列表
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/order/list/", method = RequestMethod.GET)
+	public String orderList(Integer status, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		List<CoreOrder> orderList = this.getCoreOrderService().getUserOrderListByStatus(signinUser.getId(), status);
+		request.setAttribute("status", status);
+		request.setAttribute("orderList", orderList);
+		return "web/mobile/order/list";
+	}
+
+	/**
 	 * 
 	 */
 	@Resource
@@ -237,6 +275,12 @@ public class WebMobileController {
 	 */
 	@Resource
 	private CoreCartService coreCartService;
+
+	/**
+	 * 
+	 */
+	@Resource
+	private CoreOrderService coreOrderService;
 
 	/**
 	 * 
@@ -302,5 +346,13 @@ public class WebMobileController {
 
 	public void setSystemCaptchaService(SystemCaptchaService systemCaptchaService) {
 		this.systemCaptchaService = systemCaptchaService;
+	}
+
+	public CoreOrderService getCoreOrderService() {
+		return coreOrderService;
+	}
+
+	public void setCoreOrderService(CoreOrderService coreOrderService) {
+		this.coreOrderService = coreOrderService;
 	}
 }

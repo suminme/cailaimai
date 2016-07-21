@@ -6,7 +6,7 @@
 		<li><a href="${env.host}/m/"> <span class="am-icon-home"></span>
 				<span class="am-navbar-label">首页</span>
 		</a></li>
-		<li><a href="javascript:;"> <span class="am-icon-bullhorn"></span>
+		<li><a href="${env.host}/m/new/"> <span class="am-icon-bullhorn"></span>
 				<span class="am-navbar-label">新手上路</span>
 		</a></li>
 		<li><a href="${env.host}/m/mall/cart/"><span
