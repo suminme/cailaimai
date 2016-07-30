@@ -191,10 +191,10 @@
 		</div>
 		<jsp:include page="include/footbar.jsp" />
 	</div>
-	<script type="text/javascript">
-		if (UTIL.mobile()) {
-			location.href = "${env.host}/m/";
-		}
-	</script>
 </body>
 <jsp:include page="include/footer.jsp" />
+<script type="text/javascript">
+	if (UTIL.mobile()) {
+		location.href = "${env.host}/m/";
+	}
+</script>
