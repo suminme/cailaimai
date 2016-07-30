@@ -6,7 +6,8 @@
 		form : {},
 		ajax : {},
 		noty : {},
-		loader : {}
+		loader : {},
+		mobile : {}
 	};
 	window.UTIL = UTIL;
 }());
@@ -32,23 +33,23 @@
 	 */
 	UTIL.ajax.json = function(method, url, data, callback) {
 		$
-				.ajax({
-					url : url,
-					data : data,
-					cache : false,
-					type : method,
-					dataType : "json",
-					error : function(r) {
-						if (typeof callback != "undefined") {
-							callback(eval("({'success':false,'message':'系统错误，请稍后再试'})"));
-						}
-					},
-					success : function(json) {
-						if (typeof callback != "undefined") {
-							callback(json);
-						}
+			.ajax({
+				url : url,
+				data : data,
+				cache : false,
+				type : method,
+				dataType : "json",
+				error : function(r) {
+					if (typeof callback != "undefined") {
+						callback(eval("({'success':false,'message':'系统错误，请稍后再试'})"));
 					}
-				});
+				},
+				success : function(json) {
+					if (typeof callback != "undefined") {
+						callback(json);
+					}
+				}
+			});
 	};
 	/**
 	 * 
@@ -124,5 +125,14 @@
 	UTIL.loader.stop = function(text) {
 		loading_overlay.destroy();
 		loading_overlay = null;
+	}
+	/**
+	 * 
+	 */
+	UTIL.mobile = function() {
+		if ( (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) ) {
+			return true;
+		}
+		return false;
 	}
 }());

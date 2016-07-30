@@ -103,14 +103,13 @@
 																							</div>
 																							<div class="product-meta">
 																								<div class="top">
-																									<h3 class="name" title="${goods.name}" style="white-space: nowrap;overflow: hidden;">
+																									<h3 class="name" title="${goods.name}"
+																										style="white-space: nowrap;overflow: hidden;">
 																										<a
 																											href="${env.host}/mall/goods/${goods.id}.html">${goods.name}</a>
 																									</h3>
 																									<div class="rating"></div>
-																									<div>
-																										销量:${goods.totalSale}
-																									</div>
+																									<div>销量:${goods.totalSale}</div>
 																									<div class="price">
 																										<span class="price-new">¥
 																											${goods.price}</span>
@@ -192,5 +191,10 @@
 		</div>
 		<jsp:include page="include/footbar.jsp" />
 	</div>
+	<script type="text/javascript">
+		if (UTIL.mobile()) {
+			location.href = "${env.host}/m/";
+		}
+	</script>
 </body>
 <jsp:include page="include/footer.jsp" />
