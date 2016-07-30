@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 	<modelVersion>4.0.0</modelVersion>
 	<properties>
-		<webVersion>3.1</webVersion>
+		<webVersion>2.5</webVersion>
 		<spring.version>4.2.3.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

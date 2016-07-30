@@ -217,15 +217,14 @@
 				mt[mallId] = 0;
 			}
 			var st = price * amount;
+			item.find(".goodsTotal").html(toDecimal(st));
 			if (item.find("[name='goodsCheck']")[0].checked) {
 				count++;
 				total = total + st;
 				mt[mallId] = mt[mallId] + st;
-				item.addClass("item-selected");
 				item.find(".sfv").attr("disabled", false);
 			} else {
 				mc[mallId] = "n";
-				item.removeClass("item-selected");
 				item.find(".sfv").attr("disabled", true);
 			}
 			item.find("[name='amount']").val(toDecimal(amount));
@@ -243,10 +242,18 @@
 		});
 		$(".count").html(toDecimal(count));
 		$(".total").html("¥" + toDecimal(total));
+		$(".submit-btn").addClass(count == 0?"bgc3":"bgc4");
+		$(".submit-btn").removeClass(count == 0?"bgc4":"bgc3");
 		return {
 			"count" : count,
 			"total" : total
 		};
+	}
+	MOBILE.cart.checkAll = function() {
+		$.each($("[name='goodsCheck']"),function(){
+			$(this)[0].checked=true;
+		});
+		MOBILE.cart.compute();
 	}
 	MOBILE.cart.del = function(id, t) {
 		if (!confirm("确认删除吗?")) {

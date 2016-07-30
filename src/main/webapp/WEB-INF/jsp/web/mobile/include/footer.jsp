@@ -17,6 +17,7 @@
 <script src="${env.staticHost}/ec/vendor/md5/md5.js"></script>
 <script type="text/javascript" src="${env.staticHost}/ec/js/util.js"></script>
 <script type="text/javascript" src="${env.staticHost}/ec/js/mobile.js"></script>
+<script type="text/javascript" src="${env.staticHost}/ec/js/util.js"></script>
 <script>
 	UTIL.init({
 		host : "${env.host}",

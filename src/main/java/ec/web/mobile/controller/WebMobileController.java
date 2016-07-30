@@ -41,7 +41,6 @@ import framework.data.web.util.WebUtil;
  * @version 0.1
  * @since 2016-07-06
  */
-@WebCart
 @Controller
 @RequestMapping("/m")
 public class WebMobileController {
@@ -49,6 +48,7 @@ public class WebMobileController {
 	/**
 	 * 首页
 	 */
+	@WebCart
 	@WebMallData
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -96,6 +96,7 @@ public class WebMobileController {
 	/**
 	 * 个人中心
 	 */
+	@WebCart
 	@Login(mobile = true)
 	@RequestMapping(value = "/personal/", method = RequestMethod.GET)
 	public String personal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -217,6 +218,7 @@ public class WebMobileController {
 	/**
 	 * 新手上路
 	 */
+	@WebCart
 	@RequestMapping(value = "/new/", method = RequestMethod.GET)
 	public String toNew(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<CoreMall> mallList = this.getCoreMallService().getMallList();
@@ -230,6 +232,9 @@ public class WebMobileController {
 	@Login(mobile = true)
 	@RequestMapping(value = "/mall/cart/", method = RequestMethod.GET)
 	public String toCart(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		CoreCart cart = this.getCoreCartService().getCartByUserWithGoods(signinUser.getId());
+		request.setAttribute("cart", cart);
 		return "web/mobile/mall/cart";
 	}
 
