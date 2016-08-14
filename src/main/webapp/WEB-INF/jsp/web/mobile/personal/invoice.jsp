@@ -23,19 +23,42 @@
 			</c:if>
 			<c:if test="${datas ne null}">
 				<c:forEach var="data" items="${datas}">
-					<li class="am-padding"><span> ${data.company}<span
-							class="am-padding-left-sm"></span>
-					</span>
+					<li class="am-padding"><span><a class="link am-inline"
+							href="${env.host}/m/personal/invoice/add/?id=${data.id}">${data.company}</a><span
+							class="am-padding-left-sm"></span> </span> <a
+						class=" am-fr link am-inline" href="javascript:;"
+						onclick="delInvoice('${data.id}')">删除</a>
 						<div class="c2 am-padding-top-sm am-text-sm">
 							<i class="am-icon-location-arrow"></i>
 							${data.tax},${data.bank},${data.account},${data.phone},${data.address}
 						</div></li>
 				</c:forEach>
 			</c:if>
+			<li class="am-padding am-text-center"><span><a
+					class="link am-inline" href="${env.host}/m/personal/invoice/add/">新增</a>
+			</span></li>
 			<li></li>
 		</ul>
 		<div nc-tips width="120px"></div>
 	</div>
 	<jsp:include page="../include/footer.jsp" />
+	<script>
+		function delInvoice(id) {
+			if (!confirm("确认删除吗?")) {
+				return;
+			}
+			var url = UTIL.config.host + "/m/personal/invoice/delete/";
+			UTIL.ajax.post(url, {
+				id : id
+			}, function(json) {
+				if (json.success) {
+					location.reload();
+				}
+				else {
+					alert("删除失败");
+				}
+			});
+		}
+	</script>
 </body>
 </html>

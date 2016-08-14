@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -125,6 +126,50 @@ public class WebMobileController {
 	}
 
 	/**
+	 * 个人中心-收货地址
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/personal/address/add/", method = RequestMethod.GET)
+	public String toPersonalAddressAdd(Long id, String r, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		request.setAttribute("r", r);
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		if (null != id) {
+			CoreUserAddress data = this.getCoreUserService().getAddressByUserAndId(signinUser.getId(), id);
+			request.setAttribute("data", data);
+		}
+		return "web/mobile/personal/address_add";
+	}
+
+	/**
+	 * 个人中心-收货地址
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/personal/address/add/", method = RequestMethod.POST)
+	public JSON personalAddressAdd(@ModelAttribute CoreUserAddress data, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		if (null == data.getId()) {
+			this.getCoreUserService().saveAddress(signinUser.getId(), data);
+		} else {
+			this.getCoreUserService().updateAddress(signinUser.getId(), data);
+		}
+		return JSON.getJson(true);
+	}
+
+	/**
+	 * 个人中心-收货地址
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/personal/address/delete/", method = RequestMethod.POST)
+	public JSON personalAddressDelete(@RequestParam("id") Long id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		this.getCoreUserService().deleteAddressByUserAndId(signinUser.getId(), id);
+		return JSON.getJson(true);
+	}
+
+	/**
 	 * 个人中心-开票信息
 	 */
 	@Login(mobile = true)
@@ -134,6 +179,50 @@ public class WebMobileController {
 		List<CoreUserInvoice> datas = this.getCoreUserService().getInvoiceListByUser(signinUser.getId());
 		request.setAttribute("datas", datas);
 		return "web/mobile/personal/invoice";
+	}
+
+	/**
+	 * 个人中心-开票信息
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/personal/invoice/add/", method = RequestMethod.GET)
+	public String toPersonalInvoiceAdd(Long id, String r, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		request.setAttribute("r", r);
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		if (null != id) {
+			CoreUserInvoice data = this.getCoreUserService().getInvoiceByUserAndId(signinUser.getId(), id);
+			request.setAttribute("data", data);
+		}
+		return "web/mobile/personal/invoice_add";
+	}
+
+	/**
+	 * 个人中心-开票信息
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/personal/invoice/add/", method = RequestMethod.POST)
+	public JSON personalInvoiceAdd(@ModelAttribute CoreUserInvoice data, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		if (null == data.getId()) {
+			this.getCoreUserService().saveInvoice(signinUser.getId(), data);
+		} else {
+			this.getCoreUserService().updateInvoice(signinUser.getId(), data);
+		}
+		return JSON.getJson(true);
+	}
+
+	/**
+	 * 个人中心-开票信息
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/personal/invoice/delete/", method = RequestMethod.POST)
+	public JSON personalInvoiceDelete(@RequestParam("id") Long id, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		this.getCoreUserService().deleteInvoiceByUserAndId(signinUser.getId(), id);
+		return JSON.getJson(true);
 	}
 
 	/**

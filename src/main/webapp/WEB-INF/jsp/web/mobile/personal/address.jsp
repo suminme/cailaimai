@@ -23,8 +23,11 @@
 			</c:if>
 			<c:if test="${datas ne null}">
 				<c:forEach var="data" items="${datas}">
-					<li class="am-padding"><span>
-							${data.name}(${data.phone})<span class="am-padding-left-sm"></span>
+					<li class="am-padding"><span> <a class="link am-inline"
+							href="${env.host}/m/personal/address/add/?id=${data.id}">${data.name}(${data.phone})</a><span
+							class="am-padding-left-sm"></span><a
+							class=" am-fr link am-inline" href="javascript:;"
+							onclick="delAddress('${data.id}')">删除</a>
 					</span>
 						<div class="c2 am-padding-top-sm am-text-sm">
 							<i class="am-icon-location-arrow"></i>
@@ -32,10 +35,31 @@
 						</div></li>
 				</c:forEach>
 			</c:if>
+			<li class="am-padding am-text-center"><span><a
+					class="link am-inline" href="${env.host}/m/personal/address/add/">新增</a>
+			</span></li>
 			<li></li>
 		</ul>
 		<div nc-tips width="120px"></div>
 	</div>
 	<jsp:include page="../include/footer.jsp" />
+	<script>
+		function delAddress(id) {
+			if (!confirm("确认删除吗?")) {
+				return;
+			}
+			var url = UTIL.config.host + "/m/personal/address/delete/";
+			UTIL.ajax.post(url, {
+				id : id
+			}, function(json) {
+				if (json.success) {
+					location.reload();
+				}
+				else {
+					alert("删除失败");
+				}
+			});
+		}
+	</script>
 </body>
 </html>
