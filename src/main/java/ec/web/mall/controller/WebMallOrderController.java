@@ -84,7 +84,7 @@ public class WebMallOrderController {
 	@WebCart
 	@WebMallData
 	@RequestMapping(value = "/success/", method = RequestMethod.GET)
-	public String submit(@RequestParam("mainCode") String mainCode, HttpServletRequest request,
+	public String success(@RequestParam("mainCode") String mainCode, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		CoreUser signinUser = this.getWebService().getSigninUser(request);
 		List<CoreOrder> orderList = this.getCoreOrderService().getUserOrderListByMainCode(signinUser.getId(), mainCode);

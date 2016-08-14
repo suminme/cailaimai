@@ -282,6 +282,7 @@
 		var count = 0;
 		var total = 0;
 		var addressId = 0;
+		var freightTotal = 0;
 		$.each($("[name='addressId']"), function() {
 			if ($(this)[0].checked) {
 				addressId = parseInt($(this).val());
@@ -300,12 +301,14 @@
 				freight = 0;
 			}
 			var t = parseFloat(money) + parseFloat(freight);
+			freightTotal = freightTotal + parseFloat(freight);
 			$(this).parent().find(".ctotal").html("¥" + toDecimal(t));
 			$(this).parent().find(".cfreight").html("¥" + toDecimal(freight));
 			total = total + t;
 		});
 		$(".total").html("¥" + toDecimal(total));
 		$(".count").html($("[name='goodsId']").length);
+		$(".freightTotal").html("¥" + toDecimal(freightTotal));
 	}
 }());
 function toDecimal(x) {

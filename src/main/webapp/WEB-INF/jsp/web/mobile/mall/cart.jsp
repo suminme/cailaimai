@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <jsp:include page="../include/header.jsp" />
 <body>
-	<form id="cart_form" action="${env.host}/mall/order/confirm/"
+	<form id="cart_form" action="${env.host}/m/order/confirm/"
 		method="post">
 		<div class="nc-main">
 			<header data-am-widget="header" class="am-header bgc5">

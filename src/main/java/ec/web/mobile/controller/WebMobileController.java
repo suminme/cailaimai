@@ -24,6 +24,7 @@ import ec.core.mall.model.CoreMall;
 import ec.core.mall.model.CoreMallType;
 import ec.core.mall.service.CoreMallService;
 import ec.core.order.model.CoreOrder;
+import ec.core.order.model.CoreOrderGoods;
 import ec.core.order.service.CoreOrderService;
 import ec.core.user.model.CoreUser;
 import ec.core.user.model.CoreUserAddress;
@@ -226,6 +227,50 @@ public class WebMobileController {
 	}
 
 	/**
+	 * 订单列表
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/order/list/", method = RequestMethod.GET)
+	public String orderList(Integer status, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		List<CoreOrder> orderList = this.getCoreOrderService().getUserOrderListByStatus(signinUser.getId(), status);
+		request.setAttribute("status", status);
+		request.setAttribute("orderList", orderList);
+		return "web/mobile/order/list";
+	}
+
+	/**
+	 * 订单确认
+	 */
+	@Login(mobile = true)
+	@RequestMapping(value = "/order/confirm/")
+	public String orderConfirm(@RequestParam("goodsId") Long[] goodsId, @RequestParam("amount") Float[] amount,
+			Long[] cartId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		Map<CoreOrder, List<CoreOrderGoods>> orderMap = this.getCoreOrderService().divideOrder(goodsId, amount);
+		request.setAttribute("cartIds", cartId);
+		request.setAttribute("orderMap", orderMap);
+		request.setAttribute("addressList", this.getCoreUserService().getAddressListByUser(signinUser.getId()));
+		request.setAttribute("invoiceList", this.getCoreUserService().getInvoiceListByUser(signinUser.getId()));
+		request.setAttribute("materialList", this.getCoreUserService().getMaterialListByUser(signinUser.getId()));
+		return "web/mobile/order/confirm";
+	}
+
+	/**
+	 * 订单提交
+	 */
+	@RequestMapping(value = "/order/submit/", method = RequestMethod.POST)
+	public String orderSubmit(@RequestParam("goodsId") Long[] goodsId, @RequestParam("amount") Float[] amount,
+			@RequestParam("addressId") Long addressId, @RequestParam("invoiceId") Long invoiceId,
+			@RequestParam("materialId") Long materialId, String about, Long[] cartId, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoreUser signinUser = this.getWebService().getSigninUser(request);
+		String mainCode = this.getCoreOrderService().createOrder(signinUser, goodsId, amount, addressId, invoiceId,
+				materialId, about, cartId);
+		return "redirect:/m/order/list/?mainCode=" + mainCode;
+	}
+
+	/**
 	 * 商城主页
 	 */
 	@WebCart
@@ -337,19 +382,6 @@ public class WebMobileController {
 		this.getCoreCartService().addGoodsToUserCart(signinUser.getId(), goodsId, amount);
 		CoreCart cart = this.getCoreCartService().getCartByUser(signinUser.getId());
 		return JSON.getJson(cart);
-	}
-
-	/**
-	 * 订单列表
-	 */
-	@Login(mobile = true)
-	@RequestMapping(value = "/order/list/", method = RequestMethod.GET)
-	public String orderList(Integer status, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CoreUser signinUser = this.getWebService().getSigninUser(request);
-		List<CoreOrder> orderList = this.getCoreOrderService().getUserOrderListByStatus(signinUser.getId(), status);
-		request.setAttribute("status", status);
-		request.setAttribute("orderList", orderList);
-		return "web/mobile/order/list";
 	}
 
 	/**
